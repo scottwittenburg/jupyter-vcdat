@@ -1,140 +1,252 @@
 version: 2
 
-checkout:
-  post:
-    - ./ci-support/checkout_merge_commit.sh
-
 aliases:
-  - &setup_miniconda
+
+   - &setup_anaconda
+    name: setup_anaconda
+    command: |
+       mkdir $WORKDIR
+       cd $WORKDIR
+       curl https://repo.continuum.io/archive/Anaconda3-5.3.0-MacOSX-x86_64.sh -o anaconda3.sh
+       bash ./anaconda3.sh -b -p miniconda
+
+   - &setup_miniconda
     name: setup_miniconda
     command: |
-      mkdir -p workspace
-      git clone -b validateNightly git@github.com:CDAT/cdat workspace/cdat
-      python workspace/cdat/scripts/install_miniconda.py -w $WORKDIR -p 'py3'
+       git clone -b validateNightly --depth 1 git@github.com:CDAT/cdat $WORKDIR/cdat
+       python $WORKDIR/cdat/scripts/install_miniconda.py -w $WORKDIR -p 'py3'
 
-  - &create_conda_env
-    name: create_conda_env
-    environment:
-       CHANNELS: "-c danlipsa -c cdat/label/nightly -c conda-forge -c cdat"
-       PKGS: """
-    command: |
-       export PATH=$WORKDIR/miniconda/bin:$PATH
-       conda config --set always_yes yes --set changeps1 no
-       conda update -y -q conda
-       conda config --set anaconda_upload no
-       conda create -q -n $PY_VER $CHANNELS $PKGS $TEMP_PKGS "python>3" nbsphinx easydev $COVERAGE_PKGS
+   - &prepare_firefox
+     name: prepare_firefox
+     command: |
+        sudo apt-get purge -y firefox
+        wget https://sourceforge.net/projects/ubuntuzilla/files/mozilla/apt/pool/main/f/firefox-mozilla-build/firefox-mozilla-build_63.0.3-0ubuntu1_amd64.deb
+        sudo dpkg -i firefox-mozilla-build_63.0.3-0ubuntu1_amd64.deb
+        wget https://github.com/mozilla/geckodriver/releases/download/v0.23.0/geckodriver-v0.23.0-linux64.tar.gz
+        gunzip geckodriver-v0.23.0-linux64.tar.gz
+        tar -xvf geckodriver-v0.23.0-linux64.tar
+        echo "xxxx ls"
+        ls
+        echo "xxx pwd"
+        pwd
+        sudo mv geckodriver /usr/local/bin
+        export PATH=/usr/local/bin:$PATH
+        type geckodriver
+        type firefox
 
-  - &setup_jupyter_vcdat
-    name: setup_jupyter_vcdat
-    command: |
-       export PATH=$WORKDIR/miniconda/bin:$PATH
-       source activate $PY_VER
-       python setup.py install
+   - &setup_for_selenium_tests
+     name: setup_for_selenium_tests
+     command: |
+        echo "xxx setup_for_selenium_tests xxx"
+        export PATH=$WORKDIR/miniconda/bin:$PATH
+        #type python
+        #python -m venv venv
+        #. venv/bin/activate
+        pip install selenium
+        pip install requests
+        pip install pytest
+        #pip install pytest-testconfig
 
-  - &run_jupyter_vcdat_tests
-    name: run_jupyter_vcdat_tests
-    command: |
-       export PATH=$WORKDIR/miniconda/bin:$PATH
-       export CDAT_ANONYMOUS_LOG=False
-       export CDAT_SETUP_PATH=${HOME}
-       source activate $PY_VER
-       #python run_tests.py -H -v2 -n 2 --checkout-baseline --no-vtk-ui $COVERAGE
-       RESULT=$?
-       echo "*** $PY_VER test result: "${RESULT} 
-       #if [[ $PY_VER = 'py3' ]]; then
-       #   cd docs
-       #   make doctest
-       #   DOC_RESULT=$?
-       #   echo "*** $PY_VER doc test result: "${DOC_RESULT}
-       #   RESULT=$(( $RESULT + $DOC_RESULT ))
-       #fi
-       exit $RESULT
+   - &install_chromedriver_on_macos
+     name: install_chromedriver_on_macos
+     command: |
+        brew update
+        brew tap homebrew/cask
+        brew cask install chromedriver
 
-  - &conda_upload
-    name: conda_upload
-    environment:
-       CHANNELS: "-c cdat/label/nightly -c conda-forge -c cdat"
-    command: |
-       if [[ $CIRCLE_BRANCH != 'master' ]]; then
-          exit 0
-       fi
-       export PATH=${HOME}/project/$WORKDIR/miniconda/bin:$PATH
-       conda install conda-build anaconda-client
-       conda config --set anaconda_upload no
-       export CONDA_BLD_PATH=`pwd`/conda_build
-       git clone git://github.com/cdat/conda-recipes
-       cd conda-recipes
-       export PKG_NAME=jupyter-vcdat
-       export USER=cdat
-       export VERSION=8.0
-       export LABEL=nightly
-       ln -s ../recipe $PKG_NAME
-       python ./prep_for_build.py -l $VERSION
-       conda build $PKG_NAME $CHANNELS --python=3.6
-       anaconda -t $CONDA_UPLOAD_TOKEN upload -u $USER -l $LABEL $CONDA_BLD_PATH/$OS/$PKG_NAME-$VERSION.`date +%Y*`0.tar.bz2 --force
+   - &download_selenium
+     name: download_selenium
+     command: |
+        cd $WORKDIR
+        #curl -O http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
+        curl -O http://selenium-release.storage.googleapis.com/3.9/selenium-server-standalone-3.9.1.jar
 
-  - &run_coveralls
-    name: run_coveralls
-    command: |
-       export PATH=$WORKDIR/miniconda/bin:$PATH
-       source activate $PY_VER
-       coveralls
-       source deactivate
+   - &start_selenium
+     name: start_selenium
+     command: |
+        cd $WORKDIR
+        mkdir test-reports
+        java -jar selenium-server-standalone-3.9.1.jar -log test-reports/selenium.log
+     background: true
+
+   - &setup_jupyter_vcdat
+     name: setup_jupyter_vcdat
+     command: |
+        export PATH=$WORKDIR/miniconda/bin:$PATH
+        export CDAT_ANONYMOUS_LOG=False
+        #export $(dbus-launch)
+        #export NSS_USE_SHARED_DB=ENABLED
+        conda create -n jupyter-vcdat -c cdat/label/nightly -c conda-forge -c cdat -c anaconda nodejs "python>3" vcs jupyterlab pip nb_conda nb_conda_kernels $FFMPEG
+        source activate jupyter-vcdat
+        pip install sidecar
+        jupyter labextension install @jupyter-widgets/jupyterlab-manager
+        jupyter labextension install @jupyter-widgets/jupyterlab-sidecar
+        cd $WORKDIR
+        echo "XXX git clone https://github.com/CDAT/vcs.git xxx"
+        git clone https://github.com/CDAT/vcs.git
+        cd vcs
+        ##git checkout boxfill_widgets_jupyter
+        python setup.py install
+        cd ..
+        #echo "xxx git clone https://github.com/CDAT/jupyter-vcdat.git xxx"
+        #git clone https://github.com/CDAT/jupyter-vcdat.git
+        #cd jupyter-vcdat
+        cd
+        #git checkout vcdat2.0-sterling
+        python setup.py install
+        pip install selenium
+        #pip install requests
+        pip install pytest
+        cd ..
+     no_output_timeout: 30m
+
+   - &run_chromedriver
+     name: run_chromedriver
+     command: |
+        chromedriver --port=9515:
+     background: true
+
+   - &run_jupyter_vcdat
+     name: run_jupyter_vcdat
+     command: |
+        pwd
+        ls
+        echo "xxx ls $WORKDIR xxx"
+        ls $WORKDIR
+        export PATH=$WORKDIR/miniconda/bin:$PATH
+        export CDAT_ANONYMOUS_LOG=False
+        #export $(dbus-launch)
+        export NSS_USE_SHARED_DB=ENABLED
+        source activate jupyter-vcdat
+        cd $WORKDIR/jupyter-vcdat
+        ls
+        date
+        jupyter lab --ip='127.0.0.1'
+     background: true
+
+   - &run_selenium_tests
+     name: run_selenium_tests
+     command: |
+        echo "sleep for 60 seconds"
+        sleep 60
+        date
+        export PATH=$WORKDIR/miniconda/envs/jupyter-vcdat/bin:$WORKDIR/miniconda/bin:/usr/local/bin:$PATH
+        source activate jupyter-vcdat
+        pytest -s -v tests/test_variable.py
+
+   - &prep_conda_cache
+     name: prep_conda_cache
+     command: |
+        mv $WORKDIR save_workdir
+
+   - &get_conda_cache
+     name: get_conda_cache
+     command: |
+        ls
+        mv save_workdir workdir
+
+   - &update_npm
+     name: update_npm
+     command: |
+        sudo npm update npm -g
+        sudo npm set registry https://registry.npmjs.org
 
 jobs:
-  macos_jupyter_vcdat_py3:
-    macos:
-      xcode: "9.2.0"
-    environment:
-      WORKDIR: "workspace/test_macos_jupyter_vcdat_py3"
-      OS: "osx-64"
-      PY_VER: "py3"
-      TEMP_PKGS: "'ffmpeg>4' 'libpng>1.6.34'" 
-    steps:
-      - checkout
-      - run: *setup_miniconda
-      - run: *get_testdata
-      - run: *create_conda_env
-      - run: *setup_jupyter_vcdat
-      - run: *run_jupyter_vcdat_tests
-      - run: *conda_upload
-      - store_artifacts:
-          path: tests_html
-          destination: tests_html
-      - store_artifacts:
-          path: tests_png
-          destination: tests_png
+   linux_selenium:
+      #docker:
+         #- image: selenium/standalone-chrome:3.1.0
+         #- image: circleci/python:3.6.2-stretch-browsers
+         #- image: muryanto1/centos_for_jupyter_vcdat
+      machine:
+         image: circleci/classic:latest
+      environment:
+         WORKDIR: 'workdir'
+         FFMPEG: 'ffmpeg'
+      steps:
+         - checkout
+         - run: which google-chrome
+         - run: id
+         - run: npm -v
+         - run: npm update npm -g
+         - run: npm -v
+         - run: npm set registry http://registry.npmjs.org
+         - run: npm install -g yarn
+         - run: cat ~/.npmrc
+         #- run: *prepare_firefox
+         - run: *setup_miniconda
+         - run: *setup_jupyter_vcdat
+         - run: *run_jupyter_vcdat
+         - run: *run_selenium_tests
 
-  linux_jupyter_vcdat_py3:
-    machine:
-      image: circleci/classic:latest
-    environment:
-      WORKDIR: "workspace/test_linux_jupyter_vcdat_py3"
-      OS: "linux-64"
-      PY_VER: "py3"
-      COVERAGE: "-c tests/coverage.json --coverage-from-repo"
-      COVERAGE_PKGS: "coverage coveralls"
-    steps:
-      - checkout
-      - run: *setup_miniconda
-      - run: *get_testdata
-      - run: *create_conda_env
-      - run: *setup_jupyter_vcdat
-      - run: *run_jupyter_vcdat_tests
-      - run: *run_coveralls
-      - run: *conda_upload
-      - store_artifacts:
-          path: tests_html
-          destination: tests_html
-      - store_artifacts:
-          path: tests_png
-          destination: tests_png
+   macos_selenium:
+      macos:
+         xcode: "10.1.0"
+      environment:
+         WORKDIR: 'workdir'
+         FFMPEG: "ffmpeg>4"
+         TEMP: "/tmp"
+      steps:
+         - checkout
+         - run: which google-chrome
+         - run: *install_chromedriver_on_macos
+         - run: which chromedriver
+         - run: id
+         - run: npm -v
+         - run: npm update npm -g
+         - run: npm -v
+         - run: npm set registry http://registry.npmjs.org
+         - run: npm install -g yarn
+         - run: *setup_anaconda 
+         - run: *setup_jupyter_vcdat
+         - run: *run_jupyter_vcdat
+         #- run: *run_chromedriver
+         - run: *run_selenium_tests
+
+   docker_selenium:
+      docker:
+         - image: circleci/node:jessie-browsers
+         - image: circleci/python:3.6.2-stretch-browsers
+         #- image: selenium/standalone-chrome:3.5.1
+      environment:
+         WORKDIR: 'workdir'
+         FFMPEG: 'ffmpeg'
+         TEMP: "/tmp"
+      steps:
+         - checkout
+         - run: which google-chrome
+         - run: which chromedriver
+         - run:
+              name: Download Selenium
+              command: |
+                 curl -O http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
+         - run:
+              name: Start Selenium
+              command: |
+                 java -jar selenium-server-standalone-3.5.3.jar -log test-reports/selenium.log
+              background: true
+         - run: id
+         - run: *setup_miniconda
+         - run: *setup_jupyter_vcdat
+         - run: *run_jupyter_vcdat
+         #- run: *run_chromedriver
+         - run: *run_selenium_tests
+
+   run_tests:
+      machine:
+         image: circleci/classic:latest
+      environment:
+         WORKDIR: 'workdir'
+      steps:
+         - checkout
+         - run: *run_selenium_tests
 
 workflows:
-  version: 2
-  jupyter_vcdat:
-    jobs:
-      - macos_jupyter_vcdat_py3:
-      - linux_jupyter_vcdat_py3:
-
-
+   version: 2
+   browser_tests:
+      jobs:
+         - docker_selenium
+         #- macos_selenium
+         #- linux_selenium
+         #- run_tests:
+         #     requires:
+         #        - test_selenium
