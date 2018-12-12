@@ -86,7 +86,7 @@ aliases:
         cd vcs
         ##git checkout boxfill_widgets_jupyter
         python setup.py install
-        cd ..
+        cd $CIRCLE_WORKING_DIRECTORY
         #echo "xxx git clone https://github.com/CDAT/jupyter-vcdat.git xxx"
         #git clone https://github.com/CDAT/jupyter-vcdat.git
         #cd jupyter-vcdat
@@ -184,20 +184,20 @@ jobs:
          TEMP: "/tmp"
       steps:
          - checkout
-         - run: which google-chrome
-         - run: *install_chromedriver_on_macos
-         - run: which chromedriver
+         #- run: which google-chrome
+         #- run: *install_chromedriver_on_macos
+         #- run: which chromedriver
          - run: id
          - run: npm -v
          - run: npm update npm -g
          - run: npm -v
          - run: npm set registry http://registry.npmjs.org
          - run: npm install -g yarn
-         - run: *setup_anaconda 
+         - run: *setup_miniconda
          - run: *setup_jupyter_vcdat
          - run: *run_jupyter_vcdat
          #- run: *run_chromedriver
-         - run: *run_selenium_tests
+         #- run: *run_selenium_tests
 
    docker_selenium:
       docker:
