@@ -87,7 +87,7 @@ aliases:
         cd vcs
         ##git checkout boxfill_widgets_jupyter
         python setup.py install
-        cd ..
+        cd ../..
         #echo "xxx git clone https://github.com/CDAT/jupyter-vcdat.git xxx"
         #git clone https://github.com/CDAT/jupyter-vcdat.git
         #cd jupyter-vcdat
