@@ -91,7 +91,8 @@ aliases:
         #echo "xxx git clone https://github.com/CDAT/jupyter-vcdat.git xxx"
         #git clone https://github.com/CDAT/jupyter-vcdat.git
         #cd jupyter-vcdat
-        cd
+        echo "xxx checking where we are...."
+        pwd
         #git checkout vcdat2.0-sterling
         python setup.py install
         pip install selenium
@@ -213,6 +214,7 @@ jobs:
          TEMP: "/tmp"
       steps:
          - checkout
+         - run: pwd
          - run: which google-chrome
          - run: which chromedriver
          - run:
@@ -222,6 +224,7 @@ jobs:
          - run:
               name: Start Selenium
               command: |
+                 mkdir test-reports
                  java -jar selenium-server-standalone-3.5.3.jar -log test-reports/selenium.log
               background: true
          - run: id
