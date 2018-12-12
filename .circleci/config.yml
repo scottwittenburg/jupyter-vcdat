@@ -126,6 +126,8 @@ aliases:
         date
         export PATH=$WORKDIR/miniconda/envs/jupyter-vcdat/bin:$WORKDIR/miniconda/bin:/usr/local/bin:$PATH
         source activate jupyter-vcdat
+        git clone https://github.com/muryanto1/jupyter-vcdat-tests.git
+        cd jupyter-vcdat-tests
         pytest -s -v tests/test_variable.py
 
    - &prep_conda_cache
