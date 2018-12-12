@@ -113,7 +113,7 @@ aliases:
         export PATH=$WORKDIR/miniconda/bin:$PATH
         export CDAT_ANONYMOUS_LOG=False
         #export $(dbus-launch)
-        export NSS_USE_SHARED_DB=ENABLED
+        #export NSS_USE_SHARED_DB=ENABLED
         source activate jupyter-vcdat
         jupyter lab --ip='127.0.0.1'
      background: true
@@ -161,11 +161,11 @@ jobs:
          - run: which google-chrome
          - run: id
          - run: npm -v
-         - run: npm update npm -g
-         - run: npm -v
-         - run: npm set registry http://registry.npmjs.org
-         - run: npm install -g yarn
-         - run: cat ~/.npmrc
+         #- run: npm update npm -g
+         #- run: npm -v
+         #- run: npm set registry http://registry.npmjs.org
+         #- run: npm install -g yarn
+         #- run: cat ~/.npmrc
          #- run: *prepare_firefox
          - run: *setup_miniconda
          - run: *setup_jupyter_vcdat
@@ -186,14 +186,14 @@ jobs:
          #- run: which chromedriver
          - run: id
          - run: npm -v
+         #- run: *run_chromedriver
          #- run: npm update npm -g
          #- run: npm -v
          #- run: npm set registry http://registry.npmjs.org
          - run: *setup_miniconda
          - run: *setup_jupyter_vcdat
          - run: *run_jupyter_vcdat
-         #- run: *run_chromedriver
-         #- run: *run_selenium_tests
+         - run: *run_selenium_tests
 
    docker_selenium:
       docker:
@@ -245,7 +245,7 @@ workflows:
       jobs:
          #- docker_selenium
          - macos_selenium
-         #- linux_selenium
+         - linux_selenium
          #- run_tests:
          #     requires:
          #        - test_selenium
