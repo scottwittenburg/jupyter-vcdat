@@ -93,7 +93,6 @@ aliases:
         pwd
         echo "xxx building jupyter-vcdat..."
         #git checkout vcdat2.0-sterling
-        npm install
         python setup.py install
         pip install selenium
         #pip install requests

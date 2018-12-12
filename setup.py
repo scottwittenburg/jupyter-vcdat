@@ -12,7 +12,7 @@ def runme(cmd):
 
 
 # runme("pip install sidecar")
-runme("npm install")
+runme("npm install --no-package-lock")
 runme("npm run build")
 runme("jupyter labextension install .")
 runme("jupyter serverextension enable --py vcs_backend")
