@@ -84,7 +84,6 @@ aliases:
         echo "XXX git clone https://github.com/CDAT/vcs.git xxx"
         git clone https://github.com/CDAT/vcs.git
         cd vcs
-        ##git checkout boxfill_widgets_jupyter
         python setup.py install
         cd ..
         #echo "xxx git clone https://github.com/CDAT/jupyter-vcdat.git xxx"
@@ -94,12 +93,12 @@ aliases:
         pwd
         echo "xxx building jupyter-vcdat..."
         #git checkout vcdat2.0-sterling
+        npm install
         python setup.py install
         pip install selenium
         #pip install requests
         pip install pytest
-
-     no_output_timeout: 30m
+     no_output_timeout: 15m
 
    - &run_chromedriver
      name: run_chromedriver
