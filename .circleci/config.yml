@@ -81,18 +81,18 @@ aliases:
         pip install sidecar
         jupyter labextension install @jupyter-widgets/jupyterlab-manager
         jupyter labextension install @jupyter-widgets/jupyterlab-sidecar
-        cd $WORKDIR
         echo "XXX git clone https://github.com/CDAT/vcs.git xxx"
         git clone https://github.com/CDAT/vcs.git
         cd vcs
         ##git checkout boxfill_widgets_jupyter
         python setup.py install
-        cd ../..
+        cd ..
         #echo "xxx git clone https://github.com/CDAT/jupyter-vcdat.git xxx"
         #git clone https://github.com/CDAT/jupyter-vcdat.git
         #cd jupyter-vcdat
         echo "xxx checking where we are...."
         pwd
+        echo "xxx building jupyter-vcdat..."
         #git checkout vcdat2.0-sterling
         python setup.py install
         pip install selenium
@@ -112,16 +112,12 @@ aliases:
      command: |
         pwd
         ls
-        echo "xxx ls $WORKDIR xxx"
-        ls $WORKDIR
+        cd $CIRCLE_WORKING_DIRECTORY
         export PATH=$WORKDIR/miniconda/bin:$PATH
         export CDAT_ANONYMOUS_LOG=False
         #export $(dbus-launch)
         export NSS_USE_SHARED_DB=ENABLED
         source activate jupyter-vcdat
-        cd $WORKDIR/jupyter-vcdat
-        ls
-        date
         jupyter lab --ip='127.0.0.1'
      background: true
 
@@ -215,6 +211,10 @@ jobs:
       steps:
          - checkout
          - run: pwd
+         - run: npm -v
+         - run: npm update npm -g
+         - run: npm -v
+         - run: npm set registry http://registry.npmjs.org
          - run: which google-chrome
          - run: which chromedriver
          - run:
