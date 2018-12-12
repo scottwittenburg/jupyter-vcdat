@@ -121,7 +121,7 @@ aliases:
    - &run_selenium_tests
      name: run_selenium_tests
      command: |
-        echo "sleep for 120 seconds"
+        echo "xxx sleep for 120 seconds"
         sleep 120
         date
         export PATH=$WORKDIR/miniconda/envs/jupyter-vcdat/bin:$WORKDIR/miniconda/bin:/usr/local/bin:$PATH
@@ -251,3 +251,4 @@ workflows:
          #- run_tests:
          #     requires:
          #        - test_selenium
+
