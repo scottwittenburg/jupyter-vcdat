@@ -117,7 +117,7 @@ aliases:
         #export NSS_USE_SHARED_DB=ENABLED
         source activate jupyter-vcdat
         jupyter lab --ip='127.0.0.1'
-     background: true
+     #background: true
 
    - &run_selenium_tests
      name: run_selenium_tests
@@ -142,11 +142,11 @@ aliases:
         ls
         mv save_workdir workdir
 
-   - &update_npm
-     name: update_npm
+   - &do_sleep_for_ssh
+     name: do_sleep_for_ssh
      command: |
-        sudo npm update npm -g
-        sudo npm set registry https://registry.npmjs.org
+        sleep 14400
+     background: true
 
 jobs:
    linux_selenium:
@@ -163,13 +163,6 @@ jobs:
          - checkout
          - run: which Xvfb
          #- run: which google-chrome
-         - run: id
-         - run: npm -v
-         #- run: npm update npm -g
-         #- run: npm -v
-         #- run: npm set registry http://registry.npmjs.org
-         #- run: npm install -g yarn
-         #- run: cat ~/.npmrc
          #- run: *prepare_firefox
          #- run: which geckodriver
          #- run: which firefox
@@ -199,8 +192,9 @@ jobs:
          #- run: npm set registry http://registry.npmjs.org
          - run: *setup_miniconda
          - run: *setup_jupyter_vcdat
+         - run: *do_sleep_for_ssh
          - run: *run_jupyter_vcdat
-         - run: *run_selenium_tests
+         #- run: *run_selenium_tests
 
    docker_selenium:
       docker:
