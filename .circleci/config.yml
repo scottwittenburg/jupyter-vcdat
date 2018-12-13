@@ -117,7 +117,7 @@ aliases:
         #export NSS_USE_SHARED_DB=ENABLED
         source activate jupyter-vcdat
         jupyter lab --ip='127.0.0.1'
-     background: true
+     #background: true
 
    - &run_selenium_tests
      name: run_selenium_tests
@@ -174,7 +174,7 @@ jobs:
          - run: *setup_miniconda
          - run: *setup_jupyter_vcdat
          - run: *run_jupyter_vcdat
-         - run: *run_selenium_tests
+         #- run: *run_selenium_tests
 
    macos_selenium:
       macos:
