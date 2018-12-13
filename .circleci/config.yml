@@ -209,10 +209,10 @@ jobs:
       steps:
          - checkout
          - run: pwd
-         - run: npm -v
-         - run: npm update npm -g
-         - run: npm -v
-         - run: npm set registry http://registry.npmjs.org
+         #- run: npm -v
+         #- run: npm update npm -g
+         #- run: npm -v
+         #- run: npm set registry http://registry.npmjs.org
          - run: which google-chrome
          - run: which chromedriver
          - run:
