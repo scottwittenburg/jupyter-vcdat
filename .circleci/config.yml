@@ -91,7 +91,7 @@ aliases:
         #cd jupyter-vcdat
         echo "xxx checking where we are...."
         pwd
-        echo "xxx building jupyter-vcdat..."
+        echo "xxxx building jupyter-vcdat..."
         #git checkout vcdat2.0-sterling
         python setup.py install
         pip install selenium
