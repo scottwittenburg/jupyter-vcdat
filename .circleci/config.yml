@@ -37,7 +37,7 @@ aliases:
    - &setup_for_selenium_tests
      name: setup_for_selenium_tests
      command: |
-        echo "xxx setup_for_selenium_tests xxx"
+        echo "xxxx setup_for_selenium_tests xxx"
         export PATH=$WORKDIR/miniconda/bin:$PATH
         #type python
         #python -m venv venv
