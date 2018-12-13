@@ -245,8 +245,8 @@ workflows:
    version: 2
    browser_tests:
       jobs:
-         - docker_selenium
-         #- macos_selenium
+         #- docker_selenium
+         - macos_selenium
          #- linux_selenium
          #- run_tests:
          #     requires:
