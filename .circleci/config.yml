@@ -95,6 +95,7 @@ aliases:
         #git checkout vcdat2.0-sterling
         python setup.py install
         pip install selenium
+        pip install pyvirtualdisplay
         #pip install requests
         pip install pytest
      no_output_timeout: 15m
@@ -245,9 +246,9 @@ workflows:
    version: 2
    browser_tests:
       jobs:
-         - docker_selenium
-         #- macos_selenium
-         - linux_selenium
+         #- docker_selenium
+         - macos_selenium
+         #- linux_selenium
          #- run_tests:
          #     requires:
          #        - test_selenium
