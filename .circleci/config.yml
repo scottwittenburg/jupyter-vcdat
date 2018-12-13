@@ -161,6 +161,7 @@ jobs:
          FFMPEG: 'ffmpeg'
       steps:
          - checkout
+         - run: which Xvfb
          - run: which google-chrome
          - run: id
          - run: npm -v
@@ -247,8 +248,8 @@ workflows:
    browser_tests:
       jobs:
          #- docker_selenium
-         - macos_selenium
-         #- linux_selenium
+         #- macos_selenium
+         - linux_selenium
          #- run_tests:
          #     requires:
          #        - test_selenium
