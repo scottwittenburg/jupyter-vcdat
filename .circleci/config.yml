@@ -117,7 +117,7 @@ aliases:
         #export NSS_USE_SHARED_DB=ENABLED
         source activate jupyter-vcdat
         jupyter lab --ip='127.0.0.1'
-     #background: true
+     background: true
 
    - &run_selenium_tests
      name: run_selenium_tests
