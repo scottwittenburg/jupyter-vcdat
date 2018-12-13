@@ -212,6 +212,7 @@ jobs:
       steps:
          - checkout
          - run: pwd
+         - run: which Xvfb
          #- run: npm -v
          #- run: npm update npm -g
          #- run: npm -v
@@ -248,8 +249,8 @@ workflows:
    version: 2
    browser_tests:
       jobs:
-         #- docker_selenium
-         - macos_selenium
+         - docker_selenium
+         #- macos_selenium
          #- linux_selenium
          #- run_tests:
          #     requires:
