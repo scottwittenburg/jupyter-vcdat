@@ -103,7 +103,7 @@ aliases:
    - &run_chromedriver
      name: run_chromedriver
      command: |
-        chromedriver --port=9515:
+        chromedriver
      background: true
 
    - &run_jupyter_vcdat
@@ -193,7 +193,7 @@ jobs:
          - run: which chromedriver
          - run: id
          - run: npm -v
-         #- run: *run_chromedriver
+         - run: *run_chromedriver
          #- run: npm update npm -g
          #- run: npm -v
          #- run: npm set registry http://registry.npmjs.org
