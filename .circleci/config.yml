@@ -206,7 +206,7 @@ jobs:
       docker:
          - image: circleci/node:jessie-browsers
          - image: circleci/python:3.6.2-stretch-browsers
-         - image: selenium/standalone-chrome:3.1.0
+         - image: selenium/standalone-chrome:latest
       environment:
          WORKDIR: 'workdir'
          FFMPEG: 'ffmpeg'
