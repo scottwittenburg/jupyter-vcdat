@@ -201,16 +201,14 @@ jobs:
    docker_selenium:
       docker:
          - image: circleci/node:jessie-browsers
-         - image: circleci/python:3.6.2-stretch-browsers
-         #- image: selenium/standalone-chrome:latest
+         - image: circleci/python:3.6.5-node-browsers
+         - image: selenium/standalone-chrome:latest
       environment:
          WORKDIR: 'workdir'
          FFMPEG: 'ffmpeg'
          TEMP: "/tmp"
       steps:
          - checkout
-         - run: pwd
-         #- run: which Xvfb
          - run: which google-chrome
          - run: which chromedriver
          - run:
@@ -243,8 +241,8 @@ workflows:
    version: 2
    browser_tests:
       jobs:
-         #- docker_selenium
-         - macos_selenium
+         - docker_selenium
+         #- macos_selenium
          #- linux_selenium
          #- run_tests:
          #     requires:
