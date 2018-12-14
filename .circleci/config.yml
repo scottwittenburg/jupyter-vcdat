@@ -185,7 +185,6 @@ jobs:
          - run: ls /Applications
          - run: brew cask install xquartz
          - run: ls /opt/X11/bin
-         - run: which Xvfb
          - run: brew cask install google-chrome
          - run: ls /Applications
          - run: ls "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
