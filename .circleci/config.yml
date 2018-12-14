@@ -117,7 +117,7 @@ aliases:
         #export NSS_USE_SHARED_DB=ENABLED
         source activate jupyter-vcdat
         jupyter lab --ip='127.0.0.1'
-     #background: true
+     background: true
 
    - &run_selenium_tests
      name: run_selenium_tests
@@ -187,20 +187,16 @@ jobs:
          - run: id
          - run: npm -v
          - run: *run_chromedriver
-         #- run: npm update npm -g
-         #- run: npm -v
-         #- run: npm set registry http://registry.npmjs.org
          - run: *setup_miniconda
          - run: *setup_jupyter_vcdat
-         - run: *do_sleep_for_ssh
          - run: *run_jupyter_vcdat
-         #- run: *run_selenium_tests
+         - run: *run_selenium_tests
 
    docker_selenium:
       docker:
          - image: circleci/node:jessie-browsers
          - image: circleci/python:3.6.2-stretch-browsers
-         - image: selenium/standalone-chrome:latest
+         #- image: selenium/standalone-chrome:latest
       environment:
          WORKDIR: 'workdir'
          FFMPEG: 'ffmpeg'
@@ -209,22 +205,18 @@ jobs:
          - checkout
          - run: pwd
          #- run: which Xvfb
-         #- run: npm -v
-         #- run: npm update npm -g
-         #- run: npm -v
-         #- run: npm set registry http://registry.npmjs.org
          - run: which google-chrome
          - run: which chromedriver
          - run:
               name: Download Selenium
               command: |
                  curl -O http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
-         #- run:
-         #     name: Start Selenium
-         #     command: |
-         #        mkdir test-reports
-         #        java -jar selenium-server-standalone-3.5.3.jar -log test-reports/selenium.log
-         #     background: true
+         - run:
+              name: Start Selenium
+              command: |
+                 mkdir test-reports
+                 java -jar selenium-server-standalone-3.5.3.jar -log test-reports/selenium.log
+              background: true
          - run: id
          - run: *setup_miniconda
          - run: *setup_jupyter_vcdat
