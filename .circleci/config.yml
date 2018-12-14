@@ -182,6 +182,7 @@ jobs:
          - checkout
          #- run: which Xvfb
          #- run: which google-chrome
+         - run: ls /opt/X11
          - run: ls /Applications
          - run: brew cask install google-chrome
          - run: ls /Applications
