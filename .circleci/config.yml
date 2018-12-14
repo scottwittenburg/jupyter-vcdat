@@ -182,8 +182,9 @@ jobs:
          - checkout
          #- run: which Xvfb
          #- run: which google-chrome
-         - run: ls /opt/X11
          - run: ls /Applications
+         - run: brew cask install xquarts
+         - run: ls /opt
          - run: brew cask install google-chrome
          - run: ls /Applications
          - run: ls "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
