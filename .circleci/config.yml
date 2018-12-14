@@ -81,7 +81,7 @@ aliases:
         pip install sidecar
         jupyter labextension install @jupyter-widgets/jupyterlab-manager
         jupyter labextension install @jupyter-widgets/jupyterlab-sidecar
-        echo "XXXX git clone https://github.com/CDAT/vcs.git xxx"
+        echo "XXXXX git clone https://github.com/CDAT/vcs.git xxx"
         git clone https://github.com/CDAT/vcs.git
         cd vcs
         python setup.py install
