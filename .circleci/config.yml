@@ -183,7 +183,7 @@ jobs:
          #- run: which Xvfb
          #- run: which google-chrome
          - run: ls /Applications
-         - run: brew cask install xquarts
+         - run: brew cask install xquartz
          - run: ls /opt
          - run: brew cask install google-chrome
          - run: ls /Applications
