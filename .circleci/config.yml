@@ -91,7 +91,7 @@ aliases:
         #cd jupyter-vcdat
         echo "xxx checking where we are...."
         pwd
-        echo "xxxx building jupyter-vcdat..."
+        echo "xxx building jupyter-vcdat..."
         #git checkout vcdat2.0-sterling
         python setup.py install
         pip install selenium
@@ -117,7 +117,7 @@ aliases:
         #export NSS_USE_SHARED_DB=ENABLED
         source activate jupyter-vcdat
         jupyter lab --ip='127.0.0.1'
-     #background: true
+     background: true
 
    - &run_selenium_tests
      name: run_selenium_tests
@@ -182,6 +182,7 @@ jobs:
          - checkout
          #- run: which Xvfb
          #- run: which google-chrome
+         - run: which vncserver
          - run: ls /Applications
          - run: brew cask install xquartz
          - run: ls /opt/X11/bin
@@ -242,8 +243,8 @@ workflows:
    version: 2
    browser_tests:
       jobs:
-         - docker_selenium
-         #- macos_selenium
+         #- docker_selenium
+         - macos_selenium
          #- linux_selenium
          #- run_tests:
          #     requires:
