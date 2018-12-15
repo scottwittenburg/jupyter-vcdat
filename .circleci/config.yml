@@ -182,7 +182,8 @@ jobs:
          - checkout
          #- run: which Xvfb
          #- run: which google-chrome
-         - run: which vncserver
+         - run: sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -activate -configure -access -on -clientopts -setvnclegacy -vnclegacy yes -clientopts -setvncpw -vncpw password1 -restart -agent -privs -all
+         #- run: which vncserver
          - run: ls /Applications
          - run: brew cask install xquartz
          - run: ls /opt/X11/bin
