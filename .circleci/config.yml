@@ -171,7 +171,7 @@ jobs:
          - run: which Xvfb
          - run: which vncserver
          - run: mkdir .vnc
-         - run: download_and_start_X
+         - run: *download_and_start_X
          #- run: which google-chrome
          - run: *prepare_firefox
          - run: which geckodriver
