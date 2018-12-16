@@ -163,6 +163,7 @@ jobs:
          - checkout
          - run: which Xvfb
          - run: which vncserver
+         - run: which expect
          - run: scripts/vncpasswd.exp
          #- run: which google-chrome
          - run: which tigervnc
