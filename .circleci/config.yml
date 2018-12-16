@@ -165,7 +165,8 @@ jobs:
          #- run: which vncserver
          #- run: vncserver
          #- run: which google-chrome
-         - run: sudo yum install tightvnc
+         - run: apt-get update && apt-get remove vnc
+         - run: apt-get install tightvnc
          - run: which tigervnc
          - run: *prepare_firefox
          - run: which geckodriver
