@@ -148,7 +148,7 @@ aliases:
         sleep 14400
      background: true
 
-   - download_and_start_X
+   - &download_and_start_X
      name: download_and_start_X
      command: |
         sudo apt-get install -y x11vnc
