@@ -170,7 +170,6 @@ jobs:
          - checkout
          - run: which Xvfb
          - run: which vncserver
-         - run: mkdir .vnc
          - run: *download_and_start_X
          #- run: which google-chrome
          - run: *prepare_firefox
@@ -226,6 +225,7 @@ jobs:
          - checkout
          - run: which google-chrome
          - run: which chromedriver
+         - run: *download_and_start_X
          - run:
               name: Download Selenium
               command: |
@@ -256,9 +256,9 @@ workflows:
    version: 2
    browser_tests:
       jobs:
-         #- docker_selenium
+         - docker_selenium
          #- macos_selenium
-         - linux_selenium
+         #- linux_selenium
          #- run_tests:
          #     requires:
          #        - test_selenium
