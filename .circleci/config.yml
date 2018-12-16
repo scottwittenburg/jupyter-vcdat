@@ -162,9 +162,11 @@ jobs:
       steps:
          - checkout
          - run: which Xvfb
-         - run: which vncserver
-         - run: vncserver
+         #- run: which vncserver
+         #- run: vncserver
          #- run: which google-chrome
+         - run: sudo yum install tightvnc
+         - run: which tigervnc
          - run: *prepare_firefox
          - run: which geckodriver
          - run: which firefox
