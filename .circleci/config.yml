@@ -173,7 +173,7 @@ jobs:
 
    macos_selenium:
       macos:
-         xcode: "10.1.0"
+         xcode: "10.4.0"
       environment:
          WORKDIR: 'workdir'
          FFMPEG: "ffmpeg>4"
