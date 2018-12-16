@@ -148,6 +148,13 @@ aliases:
         sleep 14400
      background: true
 
+   - download_and_start_X
+     name: download_and_start_X
+     command: |
+        sudo apt-get install -y x11vnc
+        x11vnc -forever -nopw
+     background: true
+
 jobs:
    linux_selenium:
       #docker:
@@ -164,8 +171,7 @@ jobs:
          - run: which Xvfb
          - run: which vncserver
          - run: mkdir .vnc
-         - run: echo "password" > .vnc/passwd
-         - run: vncserver -SecurityTypes None
+         - run: download_and_start_X
          #- run: which google-chrome
          - run: *prepare_firefox
          - run: which geckodriver
