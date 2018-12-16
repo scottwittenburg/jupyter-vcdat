@@ -163,10 +163,8 @@ jobs:
          - checkout
          - run: which Xvfb
          - run: which vncserver
-         - run: which expect
-         - run: scripts/vncpasswd.exp
+         - run: vncserver -SecurityTypes None
          #- run: which google-chrome
-         - run: which tigervnc
          - run: *prepare_firefox
          - run: which geckodriver
          - run: which firefox
