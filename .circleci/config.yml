@@ -162,10 +162,11 @@ jobs:
       steps:
          - checkout
          - run: which Xvfb
+         - run: which vncserver
          #- run: which google-chrome
-         #- run: *prepare_firefox
-         #- run: which geckodriver
-         #- run: which firefox
+         - run: *prepare_firefox
+         - run: which geckodriver
+         - run: which firefox
          - run: *setup_miniconda
          - run: *setup_jupyter_vcdat
          - run: *run_jupyter_vcdat
@@ -173,7 +174,7 @@ jobs:
 
    macos_selenium:
       macos:
-         xcode: "10.4.0"
+         xcode: "10.1.0"
       environment:
          WORKDIR: 'workdir'
          FFMPEG: "ffmpeg>4"
@@ -246,8 +247,8 @@ workflows:
    browser_tests:
       jobs:
          #- docker_selenium
-         - macos_selenium
-         #- linux_selenium
+         #- macos_selenium
+         - linux_selenium
          #- run_tests:
          #     requires:
          #        - test_selenium
