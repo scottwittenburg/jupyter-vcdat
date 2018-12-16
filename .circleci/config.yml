@@ -226,6 +226,7 @@ jobs:
          - run: which google-chrome
          - run: which chromedriver
          - run: *download_and_start_X
+         - run: hostname
          - run:
               name: Download Selenium
               command: |
@@ -241,7 +242,8 @@ jobs:
          - run: *setup_jupyter_vcdat
          - run: *run_jupyter_vcdat
          #- run: *run_chromedriver
-         #- run: *run_selenium_tests
+         - run: export DISPLAY=:1.0
+         - run: *run_selenium_tests
 
    run_tests:
       machine:
