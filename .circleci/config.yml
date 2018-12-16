@@ -163,6 +163,8 @@ jobs:
          - checkout
          - run: which Xvfb
          - run: which vncserver
+         - run: mkdir .vnc
+         - run: echo "password" > .vnc/passwd
          - run: vncserver -SecurityTypes None
          #- run: which google-chrome
          - run: *prepare_firefox
