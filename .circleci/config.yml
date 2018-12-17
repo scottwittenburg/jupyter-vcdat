@@ -224,7 +224,7 @@ jobs:
          - checkout
          - run: which google-chrome
          - run: which chromedriver
-         #- run: *download_and_start_X
+         - run: *download_and_start_X
          - run: hostname
          - run:
               name: Download Selenium
