@@ -248,7 +248,7 @@ jobs:
          - run: *run_jupyter_vcdat
          #- run: *run_chromedriver
          - run: ps -ef
-         - run: *run_selenium_tests
+         #- run: *run_selenium_tests
 
    run_tests:
       machine:
