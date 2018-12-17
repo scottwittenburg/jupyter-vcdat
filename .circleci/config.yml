@@ -228,7 +228,6 @@ jobs:
          - run: which chromedriver
          - run: ps -ef | grep Xvfb
          - run: env | grep DISPLAY
-         - run: unset DISPLAY
          #- run: *download_and_start_X
          - run: hostname
          #- run:
@@ -245,6 +244,7 @@ jobs:
          - run: id
          - run: *setup_miniconda
          - run: *setup_jupyter_vcdat
+         - run: *do_sleep_for_ssh
          - run: *run_jupyter_vcdat
          #- run: *run_chromedriver
          - run: ps -ef
