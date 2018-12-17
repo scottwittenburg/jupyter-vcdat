@@ -122,8 +122,8 @@ aliases:
    - &run_selenium_tests
      name: run_selenium_tests
      command: |
-        echo "xx sleep for 10 seconds"
-        sleep 10
+        echo "xx sleep for 60 seconds"
+        sleep 60
         date
         export PATH=$WORKDIR/miniconda/envs/jupyter-vcdat/bin:$WORKDIR/miniconda/bin:/usr/local/bin:$PATH
         source activate jupyter-vcdat
@@ -246,7 +246,7 @@ jobs:
          - run: *run_jupyter_vcdat
          #- run: *run_chromedriver
          - run: ps -ef
-         #- run: *run_selenium_tests
+         - run: *run_selenium_tests
 
    run_tests:
       machine:
