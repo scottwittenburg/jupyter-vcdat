@@ -228,6 +228,7 @@ jobs:
          - run: which chromedriver
          - run: ps -ef | grep Xvfb
          - run: env | grep DISPLAY
+         - run: unset DISPLAY
          #- run: *download_and_start_X
          - run: hostname
          #- run:
