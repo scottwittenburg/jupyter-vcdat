@@ -241,9 +241,8 @@ jobs:
          - run: *setup_jupyter_vcdat
          - run: *run_jupyter_vcdat
          #- run: *run_chromedriver
-         - run: export DISPLAY=:99
          - run: ps -ef
-         - run: *run_selenium_tests
+         #- run: *run_selenium_tests
 
    run_tests:
       machine:
