@@ -122,7 +122,7 @@ aliases:
    - &run_selenium_tests
      name: run_selenium_tests
      command: |
-        echo "xxx sleep for 10 seconds"
+        echo "xxxx sleep for 10 seconds"
         sleep 10
         date
         export PATH=$WORKDIR/miniconda/envs/jupyter-vcdat/bin:$WORKDIR/miniconda/bin:/usr/local/bin:$PATH
