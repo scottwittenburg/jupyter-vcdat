@@ -125,9 +125,9 @@ aliases:
         echo "xxxx sleep for 10 seconds"
         sleep 10
         date
-        export DISPLAY=:99
         export PATH=$WORKDIR/miniconda/envs/jupyter-vcdat/bin:$WORKDIR/miniconda/bin:/usr/local/bin:$PATH
         source activate jupyter-vcdat
+        export DISPLAY=:99
         git clone https://github.com/muryanto1/jupyter-vcdat-tests.git
         cd jupyter-vcdat-tests
         pytest -s -v tests/test_variable.py
