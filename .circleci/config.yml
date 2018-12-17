@@ -127,7 +127,7 @@ aliases:
         date
         export PATH=$WORKDIR/miniconda/envs/jupyter-vcdat/bin:$WORKDIR/miniconda/bin:/usr/local/bin:$PATH
         source activate jupyter-vcdat
-        #export DISPLAY=:99
+        export DISPLAY=:99
         git clone https://github.com/muryanto1/jupyter-vcdat-tests.git
         cd jupyter-vcdat-tests
         pytest -s -v tests/test_variable.py
@@ -215,7 +215,6 @@ jobs:
 
    docker_selenium:
       docker:
-         #- image: circleci/node:jessie-browsers
          - image: circleci/python:3.6.5-node-browsers
          - image: selenium/standalone-chrome:latest
       environment:
@@ -228,25 +227,12 @@ jobs:
          - run: which chromedriver
          - run: ps -ef | grep Xvfb
          - run: env | grep DISPLAY
-         #- run: *download_and_start_X
          - run: hostname
-         #- run:
-         #     name: Download Selenium
-         #     command: |
-         #        curl -O http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
-         # NO need to run this...since we use the image above.
-         #- run:
-         #     name: Start Selenium
-         #     command: |
-         #        mkdir test-reports
-         #        java -jar selenium-server-standalone-3.5.3.jar -log test-reports/selenium.log
-         #     background: true
          - run: id
          - run: *setup_miniconda
          - run: *setup_jupyter_vcdat
          - run: *do_sleep_for_ssh
          - run: *run_jupyter_vcdat
-         #- run: *run_chromedriver
          - run: ps -ef
          - run: *run_selenium_tests
 
