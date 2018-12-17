@@ -227,6 +227,7 @@ jobs:
          - run: which google-chrome
          - run: which chromedriver
          - run: ps -ef | grep Xvfb
+         - run: env | grep DISPLAY
          #- run: *download_and_start_X
          - run: hostname
          #- run:
