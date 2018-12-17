@@ -215,7 +215,7 @@ jobs:
 
    docker_selenium:
       docker:
-         - image: circleci/node:jessie-browsers
+         #- image: circleci/node:jessie-browsers
          - image: circleci/python:3.6.5-node-browsers
          - image: selenium/standalone-chrome:latest
       environment:
@@ -226,7 +226,8 @@ jobs:
          - checkout
          - run: which google-chrome
          - run: which chromedriver
-         - run: *download_and_start_X
+         - run: ps -ef | grep Xvfb
+         #- run: *download_and_start_X
          - run: hostname
          #- run:
          #     name: Download Selenium
