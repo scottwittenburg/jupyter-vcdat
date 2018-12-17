@@ -228,23 +228,24 @@ jobs:
          - run: which chromedriver
          - run: *download_and_start_X
          - run: hostname
-         - run:
-              name: Download Selenium
-              command: |
-                 curl -O http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
-         - run:
-              name: Start Selenium
-              command: |
-                 mkdir test-reports
-                 java -jar selenium-server-standalone-3.5.3.jar -log test-reports/selenium.log
-              background: true
+         #- run:
+         #     name: Download Selenium
+         #     command: |
+         #        curl -O http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
+         # NO need to run this...since we use the image above.
+         #- run:
+         #     name: Start Selenium
+         #     command: |
+         #        mkdir test-reports
+         #        java -jar selenium-server-standalone-3.5.3.jar -log test-reports/selenium.log
+         #     background: true
          - run: id
          - run: *setup_miniconda
          - run: *setup_jupyter_vcdat
          - run: *run_jupyter_vcdat
          #- run: *run_chromedriver
          - run: ps -ef
-         #- run: *run_selenium_tests
+         - run: *run_selenium_tests
 
    run_tests:
       machine:
