@@ -210,7 +210,7 @@ jobs:
          - run: *setup_jupyter_vcdat
          - run: *run_jupyter_vcdat
          - run: *do_sleep_for_ssh
-         - run: *run_selenium_tests
+         #- run: *run_selenium_tests
 
    docker_selenium:
       docker:
