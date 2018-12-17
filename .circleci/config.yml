@@ -91,7 +91,7 @@ aliases:
         #cd jupyter-vcdat
         echo "xxx checking where we are...."
         pwd
-        echo "xxx building jupyter-vcdat..."
+        echo "xxxxx building jupyter-vcdat..."
         #git checkout vcdat2.0-sterling
         python setup.py install
         pip install selenium
@@ -241,7 +241,7 @@ jobs:
          - run: *setup_jupyter_vcdat
          - run: *run_jupyter_vcdat
          #- run: *run_chromedriver
-         #- run: export DISPLAY=:1.0
+         - run: export DISPLAY=:99
          - run: *run_selenium_tests
 
    run_tests:
