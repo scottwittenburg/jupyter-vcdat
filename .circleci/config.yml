@@ -156,7 +156,7 @@ aliases:
    - &install_xquartz
      name: install_xquartz
      command: |
-        x11vnc -forever -nopw
+        brew cask install xquartz
 
 jobs:
    linux_selenium:
@@ -201,6 +201,7 @@ jobs:
          - run: ls /Applications
          - run: brew cask install xquartz
          - run: ls /opt/X11/bin
+         - run: export PATH=$PATH:/opt/X11/bin
          - run: brew cask install google-chrome
          - run: ls /Applications
          - run: ls "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
