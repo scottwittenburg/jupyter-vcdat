@@ -119,10 +119,9 @@ aliases:
    - &run_selenium_tests
      name: run_selenium_tests
      command: |
-        echo "xx sleep for 30 seconds"
-        sleep 30
         date
         export PATH=$WORKDIR/miniconda/envs/jupyter-vcdat/bin:$WORKDIR/miniconda/bin:/usr/local/bin:$PATH
+	export PATH=$ADD_PATH:$PATH
         source activate jupyter-vcdat
         export DISPLAY=:99
         git clone https://github.com/muryanto1/jupyter-vcdat-tests.git
@@ -186,6 +185,7 @@ jobs:
          WORKDIR: 'workdir'
          FFMPEG: "ffmpeg>4"
          TEMP: "/tmp"
+         ADD_PATH: "/opt/X11/bin"
       steps:
          - checkout
          #- run: sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -activate -configure -access -on -clientopts -setvnclegacy -vnclegacy yes -clientopts -setvncpw -vncpw password1 -restart -agent -privs -all
@@ -243,7 +243,7 @@ workflows:
    browser_tests:
       jobs:
          - docker_selenium
-         - macos_selenium
+         #- macos_selenium
          #- linux_selenium
          #- run_tests:
          #     requires:
