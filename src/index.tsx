@@ -8,7 +8,7 @@ import {
 	ABCWidgetFactory,
 	DocumentRegistry,
 	IDocumentWidget,
-	DocumentWidget
+	DocumentWidget,
 } from '@jupyterlab/docregistry';
 
 import {
@@ -66,10 +66,26 @@ function activate(app: JupyterLab) {
 
 	app.docRegistry.addFileType(ft);
 	app.docRegistry.addWidgetFactory(factory);
-
+	
 	factory.widgetCreated.connect((sender, widget) => {
 		console.log('NCViewerWidget created from factory');
 	});
+
+	// Create and show LeftSideBar
+	if(!sidebar){
+		sidebar = new LeftSideBarWidget(commands, null);
+		sidebar.id = 'vcs-left-side-bar';
+		sidebar.title.label = 'vcs';
+		sidebar.title.closable = true;
+	}
+	// Attach the widget to the left area if it's not there
+	if (!sidebar.isAttached) {
+		shell.addToLeftArea(sidebar);
+	} else {
+		sidebar.update();
+	}
+	// Activate the widget
+	shell.activateById(sidebar.id);
 
 };
 
@@ -85,13 +101,9 @@ export class NCViewerFactory extends ABCWidgetFactory<
 		const content = new NCViewerWidget(context);
 		const ncWidget = new DocumentWidget({ content, context });
 
-		// Create and show LeftSideBar
-		if(!sidebar){
-			sidebar = new LeftSideBarWidget(commands, context);
-			sidebar.id = 'vcs-left-side-bar';
-			sidebar.title.label = 'vcs';
-			sidebar.title.closable = true;
-		}
+		// Update and show LeftSideBar for file
+		sidebar.updateVars(context);
+			
 		// Attach the widget to the left area if it's not there
 		if (!sidebar.isAttached) {
 			shell.addToLeftArea(sidebar);

@@ -5,48 +5,6 @@ import { LeftSideBar } from './components/LeftSideBar';
 import { CommandRegistry } from '@phosphor/commands';
 import { DocumentRegistry } from '@jupyterlab/docregistry';
 
-/*Test python script
-import cdms2
-import vcs
-data = cdms2.open('clt.nc')
-clt = data('clt')
-*/
-
-/*Refresh python script
-import __main__
-import json
-import cdms2
-def variables_generator():
-  for nm, obj in __main__.__dict__.items():
-      if isinstance(obj, cdms2.MV2.TransientVariable):
-          yield obj.id
-  return
-def variables():
-  out = []
-  for nm, obj in __main__.__dict__.items():
-      if isinstance(obj, cdms2.MV2.TransientVariable):
-          out.append(obj.id)
-  return out
-def graphic_methods():
-  out = {}
-  for typ in vcs.graphicsmethodlist():
-      out[typ] = vcs.listelements(typ)
-  return out
-def templates():
-  return vcs.listelements("template")
-
-def list_all():
-  out = {}
-  out["variables"] = variables()
-  out["gm"] = graphic_methods()
-  out["template"] = templates()
-  return out
-
-print(variables())
-print(graphic_methods()["boxfill"])
-print(list_all())
-*/
-
 const GET_VARS_CMD =
 'import __main__\n\
 import json\n\
@@ -83,6 +41,7 @@ export class LeftSideBarWidget extends Widget {
     currentGm: string                   // name of the active graphics method
     currentVariable: string             // name of the activate variable
     currentTemplate: string             // name of the activate template
+    current_path: string
     constructor(commands: CommandRegistry, context: DocumentRegistry.Context) {
         super();
         this.div = document.createElement('div');
@@ -95,6 +54,10 @@ export class LeftSideBarWidget extends Widget {
         this.currentVariable = '';
         this.currentTemplate = '';
         this.inject = this.inject.bind(this);
+        this.current_path = "clt.nc";
+        if(this.context){
+            this.current_path = this.context.session.name;
+        }
         this.props = {
             variables: [],
             graphicsMethods: {},
@@ -126,7 +89,7 @@ export class LeftSideBarWidget extends Widget {
             },
             //These are the refresh and plot handlers.
             refreshAction: () => {
-                this.updateVars();
+                this.updateVars(context);
             },
             // plot using the currently selected variable, gm, template
             plotAction: () => {
@@ -148,7 +111,8 @@ export class LeftSideBarWidget extends Widget {
             clearAction: () => {
                 // this.currentPanel.console.clear();
             },
-            file_path: this.context.session.name,
+            //file_path: this.context.session.name,
+            file_path: this.current_path,
             inject: this.inject
         };
         this.component = ReactDOM.render(
@@ -156,7 +120,6 @@ export class LeftSideBarWidget extends Widget {
             this.div);
 
         this.updateVars = this.updateVars.bind(this);
-        this.updateVars();
     }
     updatePath(file_path: string) {
         this.component.setState({
@@ -170,13 +133,25 @@ export class LeftSideBarWidget extends Widget {
         return prom;
     }
     //This is where the code injection occurs in the current console.
-    updateVars() {
+    updateVars(context: DocumentRegistry.Context) {
         if (!this.notebook) {
+            let path = "";
+            let preferredLanguage = "";
+
+            if(context){
+                this.context = context
+                this.props.file_path = context.session.name;
+                this.updatePath(context.session.name);
+                console.log(this.context);
+                path = context.path;
+                preferredLanguage = this.context.model.defaultKernelLanguage;
+            }
+
             // Create Console and inject code
             this.commands.execute('notebook:create-new', {
                 activate: true,
-                path: this.context.path,
-                preferredLanguage: this.context.model.defaultKernelLanguage
+                path: path,
+                preferredLanguage: preferredLanguage
             }).then(notebook => {
                 notebook.session.ready.then(() => {
                     this.notebook = notebook;
