@@ -119,7 +119,7 @@ aliases:
    - &run_selenium_tests
      name: run_selenium_tests
      command: |
-        echo "xxxx sleep for 30 seconds"
+        echo "xx sleep for 30 seconds"
         sleep 30
         date
         export PATH=$WORKDIR/miniconda/envs/jupyter-vcdat/bin:$WORKDIR/miniconda/bin:/usr/local/bin:$PATH
@@ -188,7 +188,6 @@ jobs:
          TEMP: "/tmp"
       steps:
          - checkout
-         - run: which google-chrome
          #- run: sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -activate -configure -access -on -clientopts -setvnclegacy -vnclegacy yes -clientopts -setvncpw -vncpw password1 -restart -agent -privs -all
          #- run: which vncserver
          - run: ps -ef | grep -i vnc
