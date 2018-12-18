@@ -89,7 +89,7 @@ aliases:
         #echo "xxx git clone https://github.com/CDAT/jupyter-vcdat.git xxx"
         #git clone https://github.com/CDAT/jupyter-vcdat.git
         #cd jupyter-vcdat
-        echo "xxx checking where we are...."
+        echo "xxxxx checking where we are...."
         pwd
         echo "xxx building jupyter-vcdat..."
         #git checkout vcdat2.0-sterling
