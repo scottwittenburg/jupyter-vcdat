@@ -153,6 +153,11 @@ aliases:
         x11vnc -forever -nopw
      background: true
 
+   - &install_xquartz
+     name: install_xquartz
+     command: |
+        x11vnc -forever -nopw
+
 jobs:
    linux_selenium:
       #docker:
@@ -188,6 +193,8 @@ jobs:
          TEMP: "/tmp"
       steps:
          - checkout
+         - run: ls /opt/X11/bin
+	 - which firefox
          #- run: sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -activate -configure -access -on -clientopts -setvnclegacy -vnclegacy yes -clientopts -setvncpw -vncpw password1 -restart -agent -privs -all
          #- run: which vncserver
          - run: ps -ef | grep -i vnc
