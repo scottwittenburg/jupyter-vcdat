@@ -86,9 +86,6 @@ aliases:
         cd vcs
         python setup.py install
         cd ..
-        #echo "xxx git clone https://github.com/CDAT/jupyter-vcdat.git xxx"
-        #git clone https://github.com/CDAT/jupyter-vcdat.git
-        #cd jupyter-vcdat
         echo "xxxx checking where we are...."
         pwd
         echo "xxx building jupyter-vcdat..."
@@ -191,9 +188,9 @@ jobs:
          TEMP: "/tmp"
       steps:
          - checkout
-         #- run: which Xvfb
-         #- run: which google-chrome
-         - run: sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -activate -configure -access -on -clientopts -setvnclegacy -vnclegacy yes -clientopts -setvncpw -vncpw password1 -restart -agent -privs -all
+         - run: which Xvfb
+         - run: which google-chrome
+         #- run: sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -activate -configure -access -on -clientopts -setvnclegacy -vnclegacy yes -clientopts -setvncpw -vncpw password1 -restart -agent -privs -all
          #- run: which vncserver
          - run: ps -ef | grep -i vnc
          - run: ls /Applications
@@ -210,8 +207,7 @@ jobs:
          - run: *setup_miniconda
          - run: *setup_jupyter_vcdat
          - run: *run_jupyter_vcdat
-         - run: *do_sleep_for_ssh
-         #- run: *run_selenium_tests
+         - run: *run_selenium_tests
 
    docker_selenium:
       docker:
@@ -250,7 +246,7 @@ workflows:
    browser_tests:
       jobs:
          - docker_selenium
-         #- macos_selenium
+         - macos_selenium
          #- linux_selenium
          #- run_tests:
          #     requires:
