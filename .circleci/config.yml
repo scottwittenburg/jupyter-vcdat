@@ -193,7 +193,7 @@ jobs:
          - run: ps -ef | grep -i vnc
          - run: ls /Applications
          - run: brew cask install xquartz
-         - run: export PATH=$PATH:/opt/X11/bin
+         - run: ls /opt/X11/bin/Xvfb
          - run: brew cask install google-chrome
          - run: ls "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
          - run: *install_chromedriver_on_macos
@@ -218,7 +218,7 @@ jobs:
          - checkout
          - run: which google-chrome
          - run: which chromedriver
-         - run: ps -ef | grep Xvfb
+         - run: which Xvfb
          - run: env | grep DISPLAY
          - run: hostname
          - run: id
