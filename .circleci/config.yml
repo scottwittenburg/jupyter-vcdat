@@ -121,7 +121,7 @@ aliases:
      command: |
         date
         export PATH=$WORKDIR/miniconda/envs/jupyter-vcdat/bin:$WORKDIR/miniconda/bin:/usr/local/bin:$PATH
-	export PATH=$ADD_PATH:$PATH
+        export PATH=$ADD_PATH:$PATH
         source activate jupyter-vcdat
         export DISPLAY=:99
         git clone https://github.com/muryanto1/jupyter-vcdat-tests.git
