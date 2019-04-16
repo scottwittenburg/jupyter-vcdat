@@ -27,8 +27,8 @@ import { NotebookUtilities } from "../NotebookUtilities";
 import AxisInfo from "./AxisInfo";
 import ExportPlotModal from "./ExportPlotModal";
 import GraphicsMenu from "./GraphicsMenu";
-import TemplateMenu from "./TemplateMenu";
 import InteractiveDiv from "./InteractiveDiv";
+import TemplateMenu from "./TemplateMenu";
 import Variable from "./Variable";
 import VarMenu from "./VarMenu";
 

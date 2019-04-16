@@ -17,6 +17,7 @@ import { INotebookTracker, NotebookTracker } from "@jupyterlab/notebook";
 
 // Project Components
 import "../style/css/index.css";
+import InteractiveWidget from "./components/InteractiveWidget";
 import { EXTENSIONS } from "./constants";
 import { NotebookUtilities } from "./NotebookUtilities";
 import { LeftSideBarWidget, NCViewerWidget } from "./widgets";
