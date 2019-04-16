@@ -14,7 +14,6 @@ import {
 } from "reactstrap";
 
 // Project Components
-import Container from "reactstrap/lib/Container";
 import {
   CANVAS_DIMENSIONS_CMD,
   GRAPHICS_METHOD_KEY,
@@ -29,6 +28,7 @@ import AxisInfo from "./AxisInfo";
 import ExportPlotModal from "./ExportPlotModal";
 import GraphicsMenu from "./GraphicsMenu";
 import TemplateMenu from "./TemplateMenu";
+import InteractiveDiv from "./InteractiveDiv";
 import Variable from "./Variable";
 import VarMenu from "./VarMenu";
 
@@ -547,6 +547,9 @@ export class VCSMenu extends React.Component<VCSMenuProps, VCSMenuState> {
       getTemplatesList: this.props.getTemplatesList,
       updateTemplateOptions: this.updateTemplateOptions
     };
+    const InteractiveDivProps = {
+      
+    }
     const ExportPlotModalProps = {
       isOpen: this.state.isModalOpen,
       toggle: this.toggleModal,
@@ -620,6 +623,7 @@ export class VCSMenu extends React.Component<VCSMenuProps, VCSMenuState> {
           {...TemplateMenuProps}
           ref={loader => (this.templateMenuRef = loader)}
         />
+        <InteractiveDiv {...InteractiveDivProps} />
         <ExportPlotModal {...ExportPlotModalProps} />
         <div>
           <Alert
