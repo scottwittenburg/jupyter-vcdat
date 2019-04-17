@@ -547,9 +547,7 @@ export class VCSMenu extends React.Component<VCSMenuProps, VCSMenuState> {
       getTemplatesList: this.props.getTemplatesList,
       updateTemplateOptions: this.updateTemplateOptions
     };
-    const InteractiveDivProps = {
-      
-    }
+    const InteractiveDivProps = {};
     const ExportPlotModalProps = {
       isOpen: this.state.isModalOpen,
       toggle: this.toggleModal,

@@ -1,11 +1,9 @@
 // Dependencies
 import * as React from "react";
 
-interface InteractiveDivProps {
-}
+interface InteractiveDivProps {}
 
-interface InteractiveDivState {
-}
+interface InteractiveDivState {}
 
 export default class InteractiveDiv extends React.Component<
   InteractiveDivProps,

@@ -20,12 +20,15 @@ import "../style/css/index.css";
 import { EXTENSIONS } from "./constants";
 import { NotebookUtilities } from "./NotebookUtilities";
 import { LeftSideBarWidget, NCViewerWidget } from "./widgets";
+import { InteractiveWidget } from "./components/InteractiveWidget";
 
 const FILETYPE = "NetCDF";
 const FACTORY_NAME = "vcs";
 
 // Declare the widget variables
 let sidebar: LeftSideBarWidget; // The sidebar widget of the app
+let interactive: InteractiveWidget;
+
 let shell: ApplicationShell;
 let mainMenu: MainMenu;
 
@@ -77,11 +80,18 @@ function activate(
     sidebar.title.iconClass = "jp-vcdat-icon jp-SideBar-tabIcon";
     sidebar.title.closable = true;
 
+    interactive = new InteractiveWidget();
+    interactive.id = "vcdat-right-interactive-widget";
+    interactive.title.iconClass = "jp-vcdat-icon jp-SideBar-tabIcon";
+    interactive.title.closable = true;
+
     // Attach it to the left side of main area
     shell.addToLeftArea(sidebar);
+    shell.addToRightArea(interactive);
 
     // Activate the widget
     shell.activateById(sidebar.id);
+    shell.activateById(interactive.id);
   });
 
   // Initializes the sidebar widget once the application shell has been restored
@@ -99,8 +109,6 @@ function activate(
     );
     sidebar.initialize();
   });
-
-  
 }
 
 // Adds a reference link to the help menu in JupyterLab
@@ -130,6 +138,7 @@ export class NCViewerFactory extends ABCWidgetFactory<
 
     // Activate sidebar widget
     shell.activateById(sidebar.id);
+    shell.activateById(interactive.id);
 
     // Prepare the notebook for code injection
     sidebar.prepareNotebookPanel(context.session.path).catch(error => {

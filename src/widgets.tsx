@@ -140,11 +140,13 @@ export class LeftSideBarWidget extends Widget {
       this.div
     );
 
-    this.commands.addCommand("vcs:load-data", {
-      execute: args => {
-        this.commands.execute("filebrowser:activate");
-      }
-    });
+    if (!this.commands.hasCommand("vcs:load-data")) {
+      this.commands.addCommand("vcs:load-data", {
+        execute: args => {
+          this.commands.execute("filebrowser:activate");
+        }
+      });
+    }
   }
 
   // =======GETTERS AND SETTERS=======
