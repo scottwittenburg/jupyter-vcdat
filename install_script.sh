@@ -44,8 +44,6 @@ if [[ ! -d "../jupyter-vcdat" ]]; then
   cd jupyter-vcdat
 fi
 
-python setup.py install
-
 npm install
 #npm run build
 jupyter lab build
