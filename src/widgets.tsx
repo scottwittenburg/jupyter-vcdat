@@ -10,8 +10,8 @@ import * as ReactDOM from "react-dom";
 
 // Project Components
 import { CellUtilities } from "./CellUtilities";
-import AxisInfo from "./components/AxisInfo";
-import Variable from "./components/Variable";
+import { AxisInfo } from "./components/AxisInfo";
+import { Variable } from "./components/Variable";
 import { VCSMenu } from "./components/VCSMenu";
 import {
   BASE_GRAPHICS,
@@ -1353,9 +1353,3 @@ export class NCViewerWidget extends Widget {
     this.context = context;
   }
 }
-
-export default {
-  NotebookState: NOTEBOOK_STATE,
-  LeftSideBarWidget,
-  NCViewerWidget
-};

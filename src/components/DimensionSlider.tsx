@@ -1,6 +1,6 @@
 // Dependencies
 import * as _ from "lodash";
-import * as moment from "moment";
+import moment from "moment";
 import * as React from "react";
 import { Col, Row } from "reactstrap";
 
@@ -60,7 +60,7 @@ interface DimensionSliderState {
   // initialValues: [number, number]; // The slider values to be selected at startup
 }
 
-export default class DimensionSlider extends React.Component<
+export class DimensionSlider extends React.Component<
   DimensionSliderProps,
   DimensionSliderState
 > {

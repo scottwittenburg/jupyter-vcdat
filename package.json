@@ -24,7 +24,6 @@
     "url": "https://github.com/CDAT/jupyter-vcdat.git"
   },
   "scripts": {
-    "build": "tsc",
     "clean": "rimraf lib",
     "watch": "tsc -w",
     "link": "jupyter labextension link . --nobuild",
@@ -34,7 +33,12 @@
     "tslint-check": "npx tslint-config-prettier-check ./tslint.json",
     "lint": "npx tslint 'src/**/*.{ts,tsx}'",
     "format": "npx prettier-tslint fix 'src/**/*.{ts,tsx,css,scss}'",
-    "py_lint": "flake8 --show-source --statistics --ignore=F999,F405,E121,E123,E126,E226,E24,E402,E704,W504 --max-line-length=120 *.py"
+    "py_lint": "flake8 --show-source --statistics --ignore=F999,F405,E121,E123,E126,E226,E24,E402,E704,W504 --max-line-length=120 *.py",
+    "type-check": "tsc --noEmit",
+    "type-check:watch": "npm run type-check -- --watch",
+    "build": "npm run build:types && npm run build:js",
+    "build:types": "tsc --emitDeclarationOnly",
+    "build:js": "babel src --out-dir lib --extensions \".ts,.tsx\" --source-maps inline"
   },
   "lint-staged": {
     "**/*.{ts,tsx}": [
@@ -52,6 +56,7 @@
     }
   },
   "dependencies": {
+    "@babel/runtime": "^7.4.3",
     "@jupyterlab/application": "^0.19.1",
     "@jupyterlab/apputils": "^0.19.1",
     "@jupyterlab/cells": "^0.19.1",
@@ -91,6 +96,14 @@
     "remove": "^0.1.5"
   },
   "devDependencies": {
+    "@babel/cli": "^7.4.3",
+    "@babel/core": "^7.4.3",
+    "@babel/plugin-proposal-class-properties": "^7.4.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.4.3",
+    "@babel/plugin-transform-runtime": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/preset-typescript": "^7.3.3",
     "husky": "^1.3.1",
     "lint-staged": "^8.1.5",
     "node-sass": "^4.11.0",
@@ -102,7 +115,7 @@
     "tslint-config-airbnb": "^5.11.1",
     "tslint-config-prettier": "^1.18.0",
     "tslint-react": "^3.6.0",
-    "typescript": "^2.9.2"
+    "typescript": "^3.4.3"
   },
   "jupyterlab": {
     "extension": true

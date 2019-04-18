@@ -19,7 +19,7 @@ import {
 } from "reactstrap";
 
 // Project Components
-import Variable from "./Variable";
+import { Variable } from "./Variable";
 
 interface PlotMenuProps {
   updatePlotOptions: Function; // the method to call when the users wants to update the plot options
@@ -35,10 +35,7 @@ interface PlotMenuState {
   optionsChanged: boolean; // have the options been changed
 }
 
-export default class PlotMenu extends React.Component<
-  PlotMenuProps,
-  PlotMenuState
-> {
+export class PlotMenu extends React.Component<PlotMenuProps, PlotMenuState> {
   constructor(props: PlotMenuProps) {
     super(props);
     this.state = {

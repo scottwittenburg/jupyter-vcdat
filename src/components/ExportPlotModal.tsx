@@ -448,5 +448,3 @@ export class ExportPlotModal extends React.Component<
     );
   }
 }
-
-export default ExportPlotModal;

@@ -25,12 +25,12 @@ import {
   VARIABLES_LOADED_KEY
 } from "../constants";
 import { NotebookUtilities } from "../NotebookUtilities";
-import AxisInfo from "./AxisInfo";
-import ExportPlotModal from "./ExportPlotModal";
-import GraphicsMenu from "./GraphicsMenu";
-import TemplateMenu from "./TemplateMenu";
-import Variable from "./Variable";
-import VarMenu from "./VarMenu";
+import { AxisInfo } from "./AxisInfo";
+import { ExportPlotModal } from "./ExportPlotModal";
+import { GraphicsMenu } from "./GraphicsMenu";
+import { TemplateMenu } from "./TemplateMenu";
+import { Variable } from "./Variable";
+import { VarMenu } from "./VarMenu";
 
 const btnStyle: React.CSSProperties = {
   width: "100%"

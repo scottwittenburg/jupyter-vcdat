@@ -4,9 +4,9 @@ import * as React from "react";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 
 // Project Components
-import AxisInfo from "./AxisInfo";
-import VarCard from "./VarCard";
-import Variable from "./Variable";
+import { AxisInfo } from "./AxisInfo";
+import { VarCard } from "./VarCard";
+import { Variable } from "./Variable";
 
 const modalOverflow: React.CSSProperties = {
   maxHeight: "70vh",
@@ -27,10 +27,7 @@ interface VarLoaderState {
   selectedVariables: string[]; // the variables the user has selected to be loaded
 }
 
-export default class VarLoader extends React.Component<
-  VarLoaderProps,
-  VarLoaderState
-> {
+export class VarLoader extends React.Component<VarLoaderProps, VarLoaderState> {
   constructor(props: VarLoaderProps) {
     super(props);
     this.state = {

@@ -50,7 +50,7 @@ interface GraphicsMenuState {
   plotReady: boolean;
 }
 
-export default class GraphicsMenu extends React.Component<
+export class GraphicsMenu extends React.Component<
   GraphicsMenuProps,
   GraphicsMenuState
 > {

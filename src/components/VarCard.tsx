@@ -13,9 +13,9 @@ import {
 
 // Project Components
 import { NotebookUtilities } from "../NotebookUtilities";
-import AxisInfo from "./AxisInfo";
-import DimensionSlider from "./DimensionSlider";
-import Variable from "./Variable";
+import { AxisInfo } from "./AxisInfo";
+import { DimensionSlider } from "./DimensionSlider";
+import { Variable } from "./Variable";
 
 const cardStyle: React.CSSProperties = {
   margin: ".5em"
@@ -49,10 +49,7 @@ interface VarCardState {
   isChanged: boolean;
 }
 
-export default class VarCard extends React.Component<
-  VarCardProps,
-  VarCardState
-> {
+export class VarCard extends React.Component<VarCardProps, VarCardState> {
   public varName: string;
   constructor(props: VarCardProps) {
     super(props);

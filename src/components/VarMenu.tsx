@@ -14,10 +14,10 @@ import {
 import { ColorFunctions } from "../Utilities";
 
 // Project Components
-import AxisInfo from "./AxisInfo";
-import Variable from "./Variable";
-import VarLoader from "./VarLoader";
-import VarMini from "./VarMini";
+import { AxisInfo } from "./AxisInfo";
+import { Variable } from "./Variable";
+import { VarLoader } from "./VarLoader";
+import { VarMini } from "./VarMini";
 
 const varButtonStyle: React.CSSProperties = {
   marginBottom: "1em"
@@ -45,10 +45,7 @@ interface VarMenuState {
   selectedVariables: string[]; // the names of the variables the user has selected
 }
 
-export default class VarMenu extends React.Component<
-  VarMenuProps,
-  VarMenuState
-> {
+export class VarMenu extends React.Component<VarMenuProps, VarMenuState> {
   public varLoaderRef: VarLoader;
   constructor(props: VarMenuProps) {
     super(props);

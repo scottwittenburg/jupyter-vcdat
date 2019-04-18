@@ -13,9 +13,9 @@ import {
 
 // Project Components
 import { MiscUtilities } from "../Utilities";
-import AxisInfo from "./AxisInfo";
-import DimensionSlider from "./DimensionSlider";
-import Variable from "./Variable";
+import { AxisInfo } from "./AxisInfo";
+import { DimensionSlider } from "./DimensionSlider";
+import { Variable } from "./Variable";
 
 const axisStyle: React.CSSProperties = {
   marginLeft: ".5em"
@@ -43,10 +43,7 @@ interface VarMiniState {
   showAxis: boolean; // should the edit axis modal be shown
 }
 
-export default class VarMini extends React.Component<
-  VarMiniProps,
-  VarMiniState
-> {
+export class VarMini extends React.Component<VarMiniProps, VarMiniState> {
   public varName: string;
   constructor(props: VarMiniProps) {
     super(props);

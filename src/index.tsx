@@ -32,14 +32,12 @@ let mainMenu: MainMenu;
 /**
  * Initialization data for the jupyter-vcdat extension.
  */
-const extension: JupyterLabPlugin<void> = {
+export const extension: JupyterLabPlugin<void> = {
   id: "jupyter-vcdat",
   autoStart: true,
   requires: [INotebookTracker, IMainMenu],
   activate
 };
-
-export default extension;
 
 /**
  * Activate the vcs widget extension.

@@ -6,8 +6,7 @@ import { CommandRegistry } from "@phosphor/commands";
 import { OUTPUT_RESULT_NAME } from "./constants";
 
 /** Contains utility functions for manipulating/handling notebooks in the application. */
-namespace NotebookUtilities {
-
+export class NotebookUtilities {
   /**
    * Opens a pop-up dialog in JupyterLab to display a simple message.
    * @param title The title for the message popup
@@ -15,7 +14,7 @@ namespace NotebookUtilities {
    * @param buttonLabel The label to use for the button. Default is 'OK'
    * @returns Promise<void> - A promise once the message is closed.
    */
-  export async function showMessage(
+  public static async showMessage(
     title: string,
     msg: string,
     buttonLabel: string = "OK"
@@ -31,7 +30,7 @@ namespace NotebookUtilities {
    * @param command The command registry
    * @returns Promise<NotebookPanel> - A promise containing the notebook panel object that was created (if successful).
    */
-  export async function createNewNotebook(
+  public static async createNewNotebook(
     command: CommandRegistry
   ): Promise<NotebookPanel> {
     const notebook: any = await command.execute("notebook:create-new", {
@@ -51,7 +50,7 @@ namespace NotebookUtilities {
    * @param key The key of the value.
    * @returns Promise<any> - The value of the metadata. Returns null if the key doesn't exist.
    */
-  export async function getMetaData(
+  public static async getMetaData(
     notebookPanel: NotebookPanel,
     key: string
   ): Promise<any> {
@@ -74,10 +73,7 @@ namespace NotebookUtilities {
    * @param key The key of the value.
    * @returns any -The value of the metadata. Returns null if the key doesn't exist.
    */
-  export function getMetaDataNow(
-    notebookPanel: NotebookPanel,
-    key: string
-  ): any {
+  public static getMetaDataNow(notebookPanel: NotebookPanel, key: string): any {
     if (notebookPanel == null) {
       throw new Error(
         "The notebook is null or undefined. No meta data available."
@@ -98,7 +94,7 @@ namespace NotebookUtilities {
    * @param save Default is false. Whether the notebook should be saved after the meta data is set.
    * @returns The old value for the key, or undefined if it did not exist.
    */
-  export async function setMetaData(
+  public static async setMetaData(
     notebookPanel: NotebookPanel,
     key: string,
     value: any,
@@ -127,7 +123,7 @@ namespace NotebookUtilities {
    * Note: This function will not wait for the save to complete, it only sends a save request.
    * @returns The old value for the key, or undefined if it did not exist.
    */
-  export function setMetaDataNow(
+  public static setMetaDataNow(
     notebookPanel: NotebookPanel,
     key: string,
     value: any,
@@ -153,13 +149,13 @@ namespace NotebookUtilities {
    * @returns Promise<string> - A promise containing the execution results of the code as a string.
    * Or an empty string if there were no results.
    */
-  export async function sendSimpleKernelRequest(
+  public static async sendSimpleKernelRequest(
     notebookPanel: NotebookPanel,
     code: string,
     storeHistory: boolean = false
   ): Promise<string> {
     // Send request to kernel with pre-filled parameters
-    const result: any = await sendKernelRequest(
+    const result: any = await NotebookUtilities.sendKernelRequest(
       notebookPanel,
       code,
       { result: OUTPUT_RESULT_NAME },
@@ -214,7 +210,7 @@ namespace NotebookUtilities {
    * @see For more information on JupyterLab messages:
    * https://jupyter-client.readthedocs.io/en/latest/messaging.html#execution-results
    */
-  export async function sendKernelRequest(
+  public static async sendKernelRequest(
     notebookPanel: NotebookPanel,
     code: string,
     userExpressions: any,
@@ -251,5 +247,3 @@ namespace NotebookUtilities {
     return content.user_expressions;
   }
 }
-
-export { NotebookUtilities };

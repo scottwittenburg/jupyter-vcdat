@@ -27,24 +27,25 @@ $CONDA_EXE update --all -y -n base
 $CONDA_EXE create -y -n jupyter-vcdat -c cdat/label/v81 -c conda-forge nodejs "python>3" vcs jupyterlab pip nb_conda nb_conda_kernels plumbum jupyterhub
 CONDA_BASE=$(conda info --base)
 source $CONDA_BASE/etc/profile.d/conda.sh
+echo "Activating conda environment"
 conda activate jupyter-vcdat
 
 # Install lazy_import
-python -m pip install lazy_import
+python3 -m pip install lazy_import
 # Install sidecar
-python -m pip install sidecar
+python3 -m pip install sidecar
 jupyter labextension install @jupyter-widgets/jupyterlab-manager
 jupyter labextension install @jupyter-widgets/jupyterlab-sidecar
 
 # Jupyterhub extension
 jupyter labextension install @jupyterlab/hub-extension
 
-if [[ ! -d "../jupyter-vcdat" ]]; then
-  git clone https://github.com/CDAT/jupyter-vcdat.git
-  cd jupyter-vcdat
-fi
+#if [[ ! -d "../jupyter-vcdat" ]]; then
+#  git clone https://github.com/CDAT/jupyter-vcdat.git
+#  cd jupyter-vcdat
+#fi
 
 npm install
 #npm run build
-jupyter lab build
+#jupyter lab build
 jupyter-labextension install .
